@@ -1,0 +1,148 @@
+---- Subscribe to JN HH Gaming On Youtube Because He given order to Ai to make this Script
+
+-- Create a ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "MyGui"
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+-- Create a Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 400, 0, 200) -- Increase the size of the frame
+frame.BackgroundColor3 = Color3.new(1, 1, 1)
+frame.Active = true -- Enable interaction with the frame
+frame.Draggable = true -- Make the frame draggable
+frame.Parent = gui
+
+-- Define the RGB color change parameters
+local speed = 0.1 -- Speed of color change (adjust as desired)
+local elapsedTime = 0
+local hue = 0
+
+-- Create a Close button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 20, 0, 20)
+closeButton.Position = UDim2.new(1, -25, 0, 5)
+closeButton.Text = "X"
+closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
+closeButton.TextColor3 = Color3.new(1, 1, 1)
+closeButton.Parent = frame
+
+-- Define a function to handle the Close button click
+local function handleCloseButtonClick()
+    gui:Destroy()
+end
+
+-- Connect the function to the Close button's MouseButton1Click event
+closeButton.MouseButton1Click:Connect(handleCloseButtonClick)
+
+-- Create a TextButton for High Jump
+local highJumpButton = Instance.new("TextButton")
+highJumpButton.Size = UDim2.new(0.5, -15, 0.25, -15) -- Adjust the button size
+highJumpButton.Position = UDim2.new(0, 10, 0, 30)
+highJumpButton.Text = "High Jump"
+highJumpButton.Parent = frame
+
+-- Define a function to handle the High Jump button click
+local function handleHighJumpClick()
+    local player = game.Players.LocalPlayer
+    local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.JumpPower = math.huge
+        print("High jump enabled!")
+    end
+end
+
+-- Connect the function to the High Jump button's MouseButton1Click event
+highJumpButton.MouseButton1Click:Connect(handleHighJumpClick)
+
+-- Create a TextButton for Hitbox
+local HitboxButton = Instance.new("TextButton")
+HitboxButton.Size = UDim2.new(0.5, -15, 0.25, -15) -- Adjust the button size
+HitboxButton.Position = UDim2.new(0.5, 5, 0, 30)
+HitboxButton.Text = "Hitbox"
+HitboxButton.Parent = frame
+
+-- Define a function to handle the Hitbox button click
+local function handleHitboxClick()
+    local scriptURL = "https://raw.githubusercontent.com/LuffysBr0ther/Hitbox/main/combat%20warrior%20hitbox.txt"
+    local success, errorMsg = pcall(function()
+        loadstring(game:HttpGet(scriptURL))()
+    end)
+    if not success then
+        warn("Failed to execute script: " .. errorMsg)
+    end
+end
+
+-- Connect the function to the Hitbox button's MouseButton1Click event
+HitboxButton.MouseButton1Click:Connect(handleHitboxClick)
+
+-- Create a TextButton for Animation
+local AnimationButton = Instance.new("TextButton")
+AnimationButton.Size = UDim2.new(0.5, -15, 0.25, -15) -- Adjust the button size
+AnimationButton.Position = UDim2.new(0, 10, 0.5, 10)
+AnimationButton.Text = "Animation"
+AnimationButton.Parent = frame
+
+-- Define a function to handle the Animation button click
+local function handleAnimationClick()
+    local scriptURL = "https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui"
+    local success, errorMsg = pcall(function()
+        loadstring(game:HttpGet(scriptURL))()
+    end)
+    if not success then
+        warn("Failed to execute script: " .. errorMsg)
+    end
+end
+
+-- Connect the function to the Animation button's MouseButton1Click event
+AnimationButton.MouseButton1Click:Connect(handleAnimationClick)
+
+-- Create a TextButton for Fly
+local FlyButton = Instance.new("TextButton")
+FlyButton.Size = UDim2.new(0.5, -15, 0.25, -15) -- Adjust the button size
+FlyButton.Position = UDim2.new(0.5, 5, 0.5, 10)
+FlyButton.Text = "Fly"
+FlyButton.Parent = frame
+
+-- Define a function to handle the Fly button click
+local function handleFlyClick()
+    local scriptURL = "https://raw.githubusercontent.com/LuffysBr0ther/Hitbox/main/Fly%20V3%20gui.txt"
+    local success, errorMsg = pcall(function()
+        loadstring(game:HttpGet(scriptURL))()
+    end)
+    if not success then
+        warn("Failed to execute script: " .. errorMsg)
+    end
+end
+
+-- Connect the function to the Fly button's MouseButton1Click event
+FlyButton.MouseButton1Click:Connect(handleFlyClick)
+
+-- Remove all existing Text objects in the frame
+for _, child in ipairs(frame:GetChildren()) do
+    if child:IsA("TextLabel") or child:IsA("TextBox") then
+        child:Destroy()
+    end
+end
+
+-- Define a function to update the background color
+local function updateBackgroundColor(dt)
+    elapsedTime = elapsedTime + dt
+    if elapsedTime >= speed then
+        elapsedTime = 0
+        hue = hue + 0.1
+        if hue >= 1 then
+            hue = 0
+        end
+        frame.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
+    end
+end
+
+-- Define a function to handle the heartbeat event
+local function heartbeat()
+    local dt = wait()
+    updateBackgroundColor(dt)
+end
+
+-- Start the heartbeat event
+game:GetService("RunService").Heartbeat:Connect(heartbeat)
